@@ -16,6 +16,10 @@
 		6135331B174C1DDF005F2856 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6135331A174C1DDF005F2856 /* Default.png */; };
 		6135331D174C1DDF005F2856 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6135331C174C1DDF005F2856 /* Default@2x.png */; };
 		6135331F174C1DDF005F2856 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6135331E174C1DDF005F2856 /* Default-568h@2x.png */; };
+		61353327174C1E19005F2856 /* MBActionSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61353326174C1E19005F2856 /* MBActionSheetView.m */; };
+		61353329174C1FA3005F2856 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61353328174C1FA3005F2856 /* QuartzCore.framework */; };
+		6135332C174CCF9D005F2856 /* MBFontImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6135332B174CCF9D005F2856 /* MBFontImage.m */; };
+		6135332E174CCFE9005F2856 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6135332D174CCFE9005F2856 /* Entypo.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +36,12 @@
 		6135331A174C1DDF005F2856 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		6135331C174C1DDF005F2856 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		6135331E174C1DDF005F2856 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		61353325174C1E19005F2856 /* MBActionSheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBActionSheetView.h; sourceTree = "<group>"; };
+		61353326174C1E19005F2856 /* MBActionSheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBActionSheetView.m; sourceTree = "<group>"; };
+		61353328174C1FA3005F2856 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6135332A174CCF9D005F2856 /* MBFontImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBFontImage.h; sourceTree = "<group>"; };
+		6135332B174CCF9D005F2856 /* MBFontImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBFontImage.m; sourceTree = "<group>"; };
+		6135332D174CCFE9005F2856 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61353329174C1FA3005F2856 /* QuartzCore.framework in Frameworks */,
 				61353309174C1DDF005F2856 /* UIKit.framework in Frameworks */,
 				6135330B174C1DDF005F2856 /* Foundation.framework in Frameworks */,
 				6135330D174C1DDF005F2856 /* CoreGraphics.framework in Frameworks */,
@@ -68,6 +79,7 @@
 		61353307174C1DDF005F2856 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				61353328174C1FA3005F2856 /* QuartzCore.framework */,
 				61353308174C1DDF005F2856 /* UIKit.framework */,
 				6135330A174C1DDF005F2856 /* Foundation.framework */,
 				6135330C174C1DDF005F2856 /* CoreGraphics.framework */,
@@ -81,6 +93,11 @@
 				61353317174C1DDF005F2856 /* AMAppDelegate.h */,
 				61353318174C1DDF005F2856 /* AMAppDelegate.m */,
 				6135330F174C1DDF005F2856 /* Supporting Files */,
+				61353325174C1E19005F2856 /* MBActionSheetView.h */,
+				61353326174C1E19005F2856 /* MBActionSheetView.m */,
+				6135332A174CCF9D005F2856 /* MBFontImage.h */,
+				6135332B174CCF9D005F2856 /* MBFontImage.m */,
+				6135332D174CCFE9005F2856 /* Entypo.ttf */,
 			);
 			path = MailboxActionSheet;
 			sourceTree = "<group>";
@@ -155,6 +172,7 @@
 				6135331B174C1DDF005F2856 /* Default.png in Resources */,
 				6135331D174C1DDF005F2856 /* Default@2x.png in Resources */,
 				6135331F174C1DDF005F2856 /* Default-568h@2x.png in Resources */,
+				6135332E174CCFE9005F2856 /* Entypo.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +185,8 @@
 			files = (
 				61353315174C1DDF005F2856 /* main.m in Sources */,
 				61353319174C1DDF005F2856 /* AMAppDelegate.m in Sources */,
+				61353327174C1E19005F2856 /* MBActionSheetView.m in Sources */,
+				6135332C174CCF9D005F2856 /* MBFontImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +303,7 @@
 				61353324174C1DDF005F2856 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
