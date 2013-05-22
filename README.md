@@ -3,4 +3,4 @@ MailboxActionSheet
 
 MailboxActionSheet
 
-![Screenshot](http://i.imgur.com/sCwqH51.png)
+![Screenshot](http://i.imgur.com/WiqXz9m.png)
