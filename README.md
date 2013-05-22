@@ -3,4 +3,4 @@ MailboxActionSheet
 
 MailboxActionSheet
 
-![Screenshot](http://amleszk.github.com/MailboxActionSheet/screenshot.png)
+![Screenshot](http://github.com/amleszk/MailboxActionSheet/blob/master/screenshot.png)
