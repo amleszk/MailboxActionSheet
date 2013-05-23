@@ -186,20 +186,6 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
     }
 
     {//Touch intercept
-//        CGFloat x = backGroundLayerFrame.origin.x;
-//        CGFloat y = backGroundLayerFrame.origin.y;
-//        NSUInteger i=0;
-//        for (UIView *itemView in _itemTouchViews) {
-//            itemView.frame =  (CGRect){
-//                .origin={x,y},
-//                .size={kMBActionSheetViewItemSize,kMBActionSheetViewItemSize}
-//            };
-//            x+= kMBActionSheetViewItemSize;
-//            if (i && i%3==0) {
-//                y+= kMBActionSheetViewItemSize;
-//                x = 0;
-//            }
-//        }
         [self threeByThreeGridLayoutWithFrame:backGroundLayerFrame
                                         items:_itemTouchViews
                                     itemBlock:^(UIView *view, CGFloat x, CGFloat y) {
@@ -220,17 +206,6 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
                     .size={kMBActionSheetViewItemSize,kMBActionSheetViewItemSize-kMBActionSheetViewDisplayItemIconPadding}
                 };
         }];
-
-//        
-//        CGFloat x = backGroundLayerFrame.origin.x;
-//        CGFloat y = backGroundLayerFrame.origin.y;
-//        for (UIView *itemView in _itemIconViews) {
-//            itemView.frame =  (CGRect){
-//                .origin={x,y},
-//                .size={kMBActionSheetViewItemSize,kMBActionSheetViewItemSize-kMBActionSheetViewDisplayItemIconPadding}
-//            };
-//            x+= kMBActionSheetViewItemSize;
-//        }
     }
     {//Labels
         
@@ -245,19 +220,6 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
                 .size=existingFrame.size
             };
         }];
-//        
-//        CGFloat x = backGroundLayerFrame.origin.x;
-//        CGFloat y = backGroundLayerFrame.origin.y;
-//        for (UIView *itemView in _itemLabelViews) {
-//            CGRect existingFrame = itemView.frame;
-//            itemView.frame =  (CGRect){
-//                .origin={
-//                    floorf(x+kMBActionSheetViewItemSize/2-existingFrame.size.width/2),
-//                    y+kMBActionSheetViewItemSize-existingFrame.size.height-kMBActionSheetViewDisplayItemLabelPadding},
-//                .size=existingFrame.size
-//            };
-//            x+= kMBActionSheetViewItemSize;
-//        }
     }
 }
 
