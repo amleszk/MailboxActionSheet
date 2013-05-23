@@ -6,6 +6,14 @@
 + (MBFontImage *)sharedFontImage;
 + (NSCache *)sharedCache;
 + (UIImage*) info;
-+(UIImage*) more;
++ (UIImage*) like;
++ (UIImage*) search;
++ (UIImage*) star;
++ (UIImage*) share;
++ (UIImage*) up;
++ (UIImage*) down;
++ (UIImage*) mail;
++ (UIImage*) later;
++ (UIImage*) more;
     
 @end

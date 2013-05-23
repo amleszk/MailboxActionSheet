@@ -24,6 +24,64 @@
     return _sharedCache;
 }
 
+#define MBFontImage_iconColor [UIColor colorWithWhite:0.9 alpha:1]
+
++(UIImage*) info {
+    return [self entypoIconChar:95];
+}
+
++(UIImage*) like {
+    return [self entypoIconChar:56];
+}
+
++(UIImage*) search {
+    return [self entypoIconChar:244];
+}
+
++(UIImage*) star {
+    return [self entypoIconChar:55];
+}
+
++(UIImage*) share {
+    return [self entypoIconChar:47];
+}
+
++(UIImage*) up {
+    return [self entypoIconChar:227];
+}
+
++(UIImage*) down {
+    return [self entypoIconChar:228];
+}
+
++(UIImage*) mail {
+    return [self entypoIconChar:37];
+}
+
++(UIImage*) later {
+    return [self entypoIconChar:78];
+}
+
+
++(UIImage*) more {
+    return [self entypoIconChar:246];
+}
+
++(UIImage*) entypoIconChar:(unichar)charNumber
+{
+    NSString *icon = [NSString stringWithCharacters:&charNumber length:1];
+    return [self imageFromText:icon
+                          size:80
+                         color:MBFontImage_iconColor
+                      fontName:@"Entypo"
+                        shadow:NO
+                        insets:UIEdgeInsetsMake(0, 0, 0, 0)];
+}
+
+
+#pragma mark - Text drawing
+
+
 +(UIImage *)imageFromText:(NSString *)text
                      size:(CGFloat)pointSize
                     color:(UIColor*)color
@@ -48,7 +106,7 @@
     NSString* key = [NSString stringWithFormat:@"%@-%.0f-%@-%@-%d",text,pointSize,colorString,fontName,shadow];
     UIImage *image = [[self sharedCache] objectForKey:key];
     if(!image) {
-    
+        
         UIFont *font = [UIFont fontWithName:fontName size:pointSize];
         CGSize size  = [text sizeWithFont:font];
         size.height += insets.bottom;
@@ -60,11 +118,11 @@
             UIGraphicsBeginImageContextWithOptions(size,NO,0.0);
         else
             UIGraphicsBeginImageContext(size);
-                
+        
         CGContextRef ctx = UIGraphicsGetCurrentContext();
         CGContextSetFillColorWithColor(ctx,[color CGColor]);
         if (shadow) {
-            CGContextSetShadowWithColor(ctx, CGSizeMake(0, 0), 3.0, [[UIColor colorWithRed:0. green:0 blue:0 alpha:1.] CGColor]);
+            CGContextSetShadowWithColor(ctx, CGSizeMake(0, 0.0), 1.0, [[UIColor colorWithWhite:0 alpha:1] CGColor]);
         }
         [text drawAtPoint:CGPointMake(insets.left, insets.top) withFont:font];
         
@@ -77,57 +135,6 @@
     return image;
 }
 
-
-+(UIImage*) info
-{
-    unichar aChar = 95;
-    NSString *icon = [NSString stringWithCharacters:&aChar length:1];
-    return [self imageFromText:icon
-                          size:100
-                         color:[UIColor whiteColor]
-                      fontName:@"Entypo"
-                        shadow:YES
-                        insets:UIEdgeInsetsMake(0, 0, 0, 0)];
-}
-
-+(UIImage*) more
-{
-    unichar aChar = 246;
-    NSString *icon = [NSString stringWithCharacters:&aChar length:1];
-    return [self imageFromText:icon
-                          size:100
-                         color:[UIColor whiteColor]
-                      fontName:@"Entypo"
-                        shadow:NO
-                        insets:UIEdgeInsetsMake(0, 0, 0, 0)];
-}
-
-
-
-//+(MBButton*) buttonWithIconChar:(unichar)aChar
-//                       fontName:(NSString*)fontName
-//                       fontSize:(NSInteger)fontSize
-//                contentEdgeInsets:(UIEdgeInsets)contentEdgeInsets
-//                         target:(id)target
-//                       selector:(SEL)selector
-//{
-//    MBButton *button = [MBButton buttonWithType:UIButtonTypeCustom];
-//    [button addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
-//    
-//    NSString *icon = [NSString  stringWithCharacters:&aChar length:1];
-//    [button setTitle:icon forState:UIControlStateNormal];    
-//    button.contentEdgeInsets = contentEdgeInsets;
-//    button.titleLabel.font = [UIFont fontWithName:fontName size:fontSize];
-//    button.titleLabel.textAlignment = NSTextAlignmentCenter;
-//    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-//    button.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-//    button.exclusiveTouch = YES;
-//    button.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-//    button.titleLabel.shadowOffset = CGSizeMake(0., 1.);
-//    [button setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    button.frame = (CGRect){.origin=CGPointZero,.size={40,40.}};
-//    return button;
-//}
 
 
 @end
