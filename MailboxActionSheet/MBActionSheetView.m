@@ -13,10 +13,10 @@ static CGSize kMBActionSheetViewSize = {kMBActionSheetViewItemCount*kMBActionShe
                                         kMBActionSheetViewItemCount*kMBActionSheetViewItemSize};
 static CGFloat kMBActionSheetViewDisplayPadding = 12;
 static CGFloat kMBActionSheetViewDisplayItemIconPadding = 15;
-static CGFloat kMBActionSheetViewDisplayItemLabelPadding = 3;
+static CGFloat kMBActionSheetViewDisplayItemLabelPadding = 8;
 
 @interface MBActionSheetView ()
-@property CALayer *backGroundLayer;
+@property UIView *backGroundView;
 @property CALayer *verticalDiv1;
 @property CALayer *verticalDiv1Light;
 @property CALayer *verticalDiv2;
@@ -51,13 +51,13 @@ static CGFloat kMBActionSheetViewDisplayItemLabelPadding = 3;
         _tapOutsideMenuGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOutsideMenu:)];
         [self addGestureRecognizer:_tapOutsideMenuGesture];
 
-        _backGroundLayer = [CALayer layer];
-        _backGroundLayer.cornerRadius = 10;
-        _backGroundLayer.borderWidth = 1.;
-        _backGroundLayer.borderColor = [[UIColor colorWithWhite:0 alpha:0.8] CGColor];
-        _backGroundLayer.masksToBounds = YES;
-		_backGroundLayer.backgroundColor = [[UIColor colorWithWhite:0 alpha:0.5] CGColor];
-        [self.layer addSublayer:_backGroundLayer];
+        _backGroundView = [[UIView alloc] initWithFrame:CGRectZero];
+        _backGroundView.layer.cornerRadius = 10;
+        _backGroundView.layer.borderWidth = 1.;
+        _backGroundView.layer.borderColor = [[UIColor colorWithWhite:0 alpha:0.8] CGColor];
+        _backGroundView.layer.masksToBounds = YES;
+		_backGroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+        [self addSubview:_backGroundView];
         
         
         //Borders
@@ -66,35 +66,35 @@ static CGFloat kMBActionSheetViewDisplayItemLabelPadding = 3;
         
         _verticalDiv1 = [CALayer layer];
         _verticalDiv1.backgroundColor = borderColor;
-        [self.layer addSublayer:_verticalDiv1];
+        [_backGroundView.layer addSublayer:_verticalDiv1];
         
         _verticalDiv1Light = [CALayer layer];
         _verticalDiv1Light.backgroundColor = borderColorLight;
-        [self.layer addSublayer:_verticalDiv1Light];
+        [_backGroundView.layer addSublayer:_verticalDiv1Light];
         
         _verticalDiv2 = [CALayer layer];
         _verticalDiv2.backgroundColor = borderColor;
-        [self.layer addSublayer:_verticalDiv2];
+        [_backGroundView.layer addSublayer:_verticalDiv2];
 
         _verticalDiv2Light = [CALayer layer];
         _verticalDiv2Light.backgroundColor = borderColorLight;
-        [self.layer addSublayer:_verticalDiv2Light];
+        [_backGroundView.layer addSublayer:_verticalDiv2Light];
         
         _horizontalDiv1 = [CALayer layer];
         _horizontalDiv1.backgroundColor = borderColor;
-        [self.layer addSublayer:_horizontalDiv1];
+        [_backGroundView.layer addSublayer:_horizontalDiv1];
 
         _horizontalDiv1Light = [CALayer layer];
         _horizontalDiv1Light.backgroundColor = borderColorLight;
-        [self.layer addSublayer:_horizontalDiv1Light];
+        [_backGroundView.layer addSublayer:_horizontalDiv1Light];
 
         _horizontalDiv2 = [CALayer layer];
         _horizontalDiv2.backgroundColor = borderColor;
-        [self.layer addSublayer:_horizontalDiv2];
+        [_backGroundView.layer addSublayer:_horizontalDiv2];
 
         _horizontalDiv2Light = [CALayer layer];
         _horizontalDiv2Light.backgroundColor = borderColorLight;
-        [self.layer addSublayer:_horizontalDiv2Light];
+        [_backGroundView.layer addSublayer:_horizontalDiv2Light];
         
         _itemIconViews = [NSMutableArray arrayWithCapacity:items.count];
         _itemLabelViews = [NSMutableArray arrayWithCapacity:items.count];
@@ -105,14 +105,12 @@ static CGFloat kMBActionSheetViewDisplayItemLabelPadding = 3;
             
             UIView *touchIntercept = [[MBActionSheetViewTouchInterceptView alloc] initWithFrame:CGRectZero target:self action:@selector(didTapMenuItem:)];
             [_itemTouchViews addObject:touchIntercept];
-            [self addSubview:touchIntercept];
-            
-            [_itemTouchBlocks addObject:item.handler];
+            [_backGroundView addSubview:touchIntercept];
             
             UIImageView *icon = [[UIImageView alloc] initWithImage:item.iconImage];
             icon.contentMode = UIViewContentModeCenter;
             [_itemIconViews addObject:icon];
-            [self addSubview:icon];
+            [_backGroundView addSubview:icon];
             
             UILabel *itemLabel = [[UILabel alloc] initWithFrame:CGRectZero];
             itemLabel.text = item.description;
@@ -121,7 +119,9 @@ static CGFloat kMBActionSheetViewDisplayItemLabelPadding = 3;
             itemLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:14.];
             [itemLabel sizeToFit];
             [_itemLabelViews addObject:itemLabel];
-            [self addSubview:itemLabel];
+            [_backGroundView addSubview:itemLabel];
+            
+            [_itemTouchBlocks addObject:item.handler];            
         }
         
     }
@@ -151,42 +151,54 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
     
     backGroundLayerFrame.origin = pointClampedToCGRect(backGroundLayerFrame.origin,displayableRect);
     
-    _backGroundLayer.frame = backGroundLayerFrame;
+    _backGroundView.frame = backGroundLayerFrame;
     
     {//Vertical lines
-        CGFloat borderX = _backGroundLayer.frame.origin.x + kMBActionSheetViewItemSize;
-        CGFloat borderY = _backGroundLayer.frame.origin.y - 1;
-        CGRect verticalLineFrame = (CGRect){
-            .origin={borderX,borderY+1},
+        CGRect lineFrame = (CGRect){
+            .origin={kMBActionSheetViewItemSize-1,1},
             .size={1.,kMBActionSheetViewSize.height-2}
         };
-        _verticalDiv1.frame = verticalLineFrame;
-        verticalLineFrame.origin.x+=1;
-        _verticalDiv1Light.frame = verticalLineFrame;
-        verticalLineFrame.origin.x += kMBActionSheetViewItemSize - 1;
-        _verticalDiv2.frame = verticalLineFrame;
-        verticalLineFrame.origin.x+=1;
-        _verticalDiv2Light.frame = verticalLineFrame;
+        _verticalDiv1.frame = lineFrame;
+        lineFrame.origin.x+=1;
+        _verticalDiv1Light.frame = lineFrame;
+        lineFrame.origin.x += kMBActionSheetViewItemSize - 2;
+        _verticalDiv2.frame = lineFrame;
+        lineFrame.origin.x+=1;
+        _verticalDiv2Light.frame = lineFrame;
     }
 
     {//Horizontal lines
-        CGFloat borderX = _backGroundLayer.frame.origin.x - 1;
-        CGFloat borderY = _backGroundLayer.frame.origin.y + kMBActionSheetViewItemSize;
-        CGRect horizontalLineFrame = (CGRect){
-            .origin={borderX+1,borderY},
-            .size={kMBActionSheetViewSize.width-2,1.}
+        CGRect lineFrame = (CGRect){
+            .origin={1,kMBActionSheetViewItemSize-1},
+            .size={kMBActionSheetViewSize.height-2,1}
         };
-        _horizontalDiv1.frame = horizontalLineFrame;
-        horizontalLineFrame.origin.y+=1;
-        _horizontalDiv1Light.frame = horizontalLineFrame;
-        horizontalLineFrame.origin.y += kMBActionSheetViewItemSize - 1;
-        _horizontalDiv2.frame = horizontalLineFrame;
-        horizontalLineFrame.origin.y+=1;
-        _horizontalDiv2Light.frame = horizontalLineFrame;
+        _horizontalDiv1.frame = lineFrame;
+        lineFrame.origin.y+=1;
+        _horizontalDiv1Light.frame = lineFrame;
+        lineFrame.origin.y += kMBActionSheetViewItemSize - 2;
+        _horizontalDiv2.frame = lineFrame;
+        lineFrame.origin.y+=1;
+        _horizontalDiv2Light.frame = lineFrame;
     }
 
+//    {//Horizontal lines
+//        CGFloat borderX = _backGroundView.frame.origin.x - 1;
+//        CGFloat borderY = _backGroundView.frame.origin.y + kMBActionSheetViewItemSize;
+//        CGRect horizontalLineFrame = (CGRect){
+//            .origin={borderX+1,borderY},
+//            .size={kMBActionSheetViewSize.width-1,1.}
+//        };
+//        _horizontalDiv1.frame = horizontalLineFrame;
+//        horizontalLineFrame.origin.y+=1;
+//        _horizontalDiv1Light.frame = horizontalLineFrame;
+//        horizontalLineFrame.origin.y += kMBActionSheetViewItemSize - 1;
+//        _horizontalDiv2.frame = horizontalLineFrame;
+//        horizontalLineFrame.origin.y+=1;
+//        _horizontalDiv2Light.frame = horizontalLineFrame;
+//    }
+
     {//Touch intercept
-        [self threeByThreeGridLayoutWithFrame:backGroundLayerFrame
+        [self threeByThreeGridLayoutWithFrame:CGRectMake(0, 0, backGroundLayerFrame.size.width, backGroundLayerFrame.size.width)
                                         items:_itemTouchViews
                                     itemBlock:^(UIView *view, CGFloat x, CGFloat y) {
             CGRect itemFrame = (CGRect){
@@ -198,7 +210,7 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
         }];
     }
     {//Icons
-        [self threeByThreeGridLayoutWithFrame:backGroundLayerFrame
+        [self threeByThreeGridLayoutWithFrame:CGRectMake(0, 0, backGroundLayerFrame.size.width, backGroundLayerFrame.size.width)
                                         items:_itemIconViews
                                     itemBlock:^(UIView *view, CGFloat x, CGFloat y) {
                 view.frame =  (CGRect){
@@ -209,7 +221,7 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
     }
     {//Labels
         
-        [self threeByThreeGridLayoutWithFrame:backGroundLayerFrame
+        [self threeByThreeGridLayoutWithFrame:CGRectMake(0, 0, backGroundLayerFrame.size.width, backGroundLayerFrame.size.width)
                                         items:_itemLabelViews
                                     itemBlock:^(UIView *view, CGFloat x, CGFloat y) {
             CGRect existingFrame = view.frame;
