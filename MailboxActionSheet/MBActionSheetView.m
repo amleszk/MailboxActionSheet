@@ -45,6 +45,8 @@ static CGFloat kMBActionSheetViewDisplayItemLabelPadding = 8;
 {
     self = [super initWithFrame:CGRectZero];
     if (self) {
+
+        NSAssert(items.count <= 9, @"More than 9 items is not currently supported");
         
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
@@ -181,24 +183,9 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
         _horizontalDiv2Light.frame = lineFrame;
     }
 
-//    {//Horizontal lines
-//        CGFloat borderX = _backGroundView.frame.origin.x - 1;
-//        CGFloat borderY = _backGroundView.frame.origin.y + kMBActionSheetViewItemSize;
-//        CGRect horizontalLineFrame = (CGRect){
-//            .origin={borderX+1,borderY},
-//            .size={kMBActionSheetViewSize.width-1,1.}
-//        };
-//        _horizontalDiv1.frame = horizontalLineFrame;
-//        horizontalLineFrame.origin.y+=1;
-//        _horizontalDiv1Light.frame = horizontalLineFrame;
-//        horizontalLineFrame.origin.y += kMBActionSheetViewItemSize - 1;
-//        _horizontalDiv2.frame = horizontalLineFrame;
-//        horizontalLineFrame.origin.y+=1;
-//        _horizontalDiv2Light.frame = horizontalLineFrame;
-//    }
-
+    CGRect layoutFrame = (CGRect){CGPointZero,backGroundLayerFrame.size};
     {//Touch intercept
-        [self threeByThreeGridLayoutWithFrame:CGRectMake(0, 0, backGroundLayerFrame.size.width, backGroundLayerFrame.size.width)
+        [self threeByThreeGridLayoutWithFrame:layoutFrame
                                         items:_itemTouchViews
                                     itemBlock:^(UIView *view, CGFloat x, CGFloat y) {
             CGRect itemFrame = (CGRect){
@@ -210,7 +197,7 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
         }];
     }
     {//Icons
-        [self threeByThreeGridLayoutWithFrame:CGRectMake(0, 0, backGroundLayerFrame.size.width, backGroundLayerFrame.size.width)
+        [self threeByThreeGridLayoutWithFrame:layoutFrame
                                         items:_itemIconViews
                                     itemBlock:^(UIView *view, CGFloat x, CGFloat y) {
                 view.frame =  (CGRect){
@@ -221,7 +208,7 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
     }
     {//Labels
         
-        [self threeByThreeGridLayoutWithFrame:CGRectMake(0, 0, backGroundLayerFrame.size.width, backGroundLayerFrame.size.width)
+        [self threeByThreeGridLayoutWithFrame:layoutFrame
                                         items:_itemLabelViews
                                     itemBlock:^(UIView *view, CGFloat x, CGFloat y) {
             CGRect existingFrame = view.frame;
