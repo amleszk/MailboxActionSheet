@@ -56,7 +56,7 @@ static CGFloat kMBActionSheetViewDisplayItemLabelPadding = 8;
         _actionSheetView = [[UIView alloc] initWithFrame:CGRectZero];
         _actionSheetView.layer.cornerRadius = 10;
         _actionSheetView.layer.borderWidth = 1.;
-        _actionSheetView.layer.borderColor = [[UIColor colorWithWhite:0 alpha:0.8] CGColor];
+        _actionSheetView.layer.borderColor = [[UIColor colorWithWhite:0 alpha:0.2] CGColor];
         _actionSheetView.layer.masksToBounds = YES;
 		_actionSheetView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
         [self addSubview:_actionSheetView];
