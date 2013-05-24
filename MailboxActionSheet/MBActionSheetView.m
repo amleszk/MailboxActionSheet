@@ -16,7 +16,7 @@ static CGFloat kMBActionSheetViewDisplayItemIconPadding = 15;
 static CGFloat kMBActionSheetViewDisplayItemLabelPadding = 8;
 
 @interface MBActionSheetView ()
-@property UIView *backGroundView;
+@property UIView *actionSheetView;
 @property CALayer *verticalDiv1;
 @property CALayer *verticalDiv1Light;
 @property CALayer *verticalDiv2;
@@ -53,13 +53,13 @@ static CGFloat kMBActionSheetViewDisplayItemLabelPadding = 8;
         _tapOutsideMenuGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOutsideMenu:)];
         [self addGestureRecognizer:_tapOutsideMenuGesture];
 
-        _backGroundView = [[UIView alloc] initWithFrame:CGRectZero];
-        _backGroundView.layer.cornerRadius = 10;
-        _backGroundView.layer.borderWidth = 1.;
-        _backGroundView.layer.borderColor = [[UIColor colorWithWhite:0 alpha:0.8] CGColor];
-        _backGroundView.layer.masksToBounds = YES;
-		_backGroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-        [self addSubview:_backGroundView];
+        _actionSheetView = [[UIView alloc] initWithFrame:CGRectZero];
+        _actionSheetView.layer.cornerRadius = 10;
+        _actionSheetView.layer.borderWidth = 1.;
+        _actionSheetView.layer.borderColor = [[UIColor colorWithWhite:0 alpha:0.8] CGColor];
+        _actionSheetView.layer.masksToBounds = YES;
+		_actionSheetView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+        [self addSubview:_actionSheetView];
         
         
         //Borders
@@ -68,35 +68,35 @@ static CGFloat kMBActionSheetViewDisplayItemLabelPadding = 8;
         
         _verticalDiv1 = [CALayer layer];
         _verticalDiv1.backgroundColor = borderColor;
-        [_backGroundView.layer addSublayer:_verticalDiv1];
+        [_actionSheetView.layer addSublayer:_verticalDiv1];
         
         _verticalDiv1Light = [CALayer layer];
         _verticalDiv1Light.backgroundColor = borderColorLight;
-        [_backGroundView.layer addSublayer:_verticalDiv1Light];
+        [_actionSheetView.layer addSublayer:_verticalDiv1Light];
         
         _verticalDiv2 = [CALayer layer];
         _verticalDiv2.backgroundColor = borderColor;
-        [_backGroundView.layer addSublayer:_verticalDiv2];
+        [_actionSheetView.layer addSublayer:_verticalDiv2];
 
         _verticalDiv2Light = [CALayer layer];
         _verticalDiv2Light.backgroundColor = borderColorLight;
-        [_backGroundView.layer addSublayer:_verticalDiv2Light];
+        [_actionSheetView.layer addSublayer:_verticalDiv2Light];
         
         _horizontalDiv1 = [CALayer layer];
         _horizontalDiv1.backgroundColor = borderColor;
-        [_backGroundView.layer addSublayer:_horizontalDiv1];
+        [_actionSheetView.layer addSublayer:_horizontalDiv1];
 
         _horizontalDiv1Light = [CALayer layer];
         _horizontalDiv1Light.backgroundColor = borderColorLight;
-        [_backGroundView.layer addSublayer:_horizontalDiv1Light];
+        [_actionSheetView.layer addSublayer:_horizontalDiv1Light];
 
         _horizontalDiv2 = [CALayer layer];
         _horizontalDiv2.backgroundColor = borderColor;
-        [_backGroundView.layer addSublayer:_horizontalDiv2];
+        [_actionSheetView.layer addSublayer:_horizontalDiv2];
 
         _horizontalDiv2Light = [CALayer layer];
         _horizontalDiv2Light.backgroundColor = borderColorLight;
-        [_backGroundView.layer addSublayer:_horizontalDiv2Light];
+        [_actionSheetView.layer addSublayer:_horizontalDiv2Light];
         
         _itemIconViews = [NSMutableArray arrayWithCapacity:items.count];
         _itemLabelViews = [NSMutableArray arrayWithCapacity:items.count];
@@ -107,12 +107,12 @@ static CGFloat kMBActionSheetViewDisplayItemLabelPadding = 8;
             
             UIView *touchIntercept = [[MBActionSheetViewTouchInterceptView alloc] initWithFrame:CGRectZero target:self action:@selector(didTapMenuItem:)];
             [_itemTouchViews addObject:touchIntercept];
-            [_backGroundView addSubview:touchIntercept];
+            [_actionSheetView addSubview:touchIntercept];
             
             UIImageView *icon = [[UIImageView alloc] initWithImage:item.iconImage];
             icon.contentMode = UIViewContentModeCenter;
             [_itemIconViews addObject:icon];
-            [_backGroundView addSubview:icon];
+            [_actionSheetView addSubview:icon];
             
             UILabel *itemLabel = [[UILabel alloc] initWithFrame:CGRectZero];
             itemLabel.text = item.description;
@@ -121,7 +121,7 @@ static CGFloat kMBActionSheetViewDisplayItemLabelPadding = 8;
             itemLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:14.];
             [itemLabel sizeToFit];
             [_itemLabelViews addObject:itemLabel];
-            [_backGroundView addSubview:itemLabel];
+            [_actionSheetView addSubview:itemLabel];
             
             [_itemTouchBlocks addObject:item.handler];            
         }
@@ -153,7 +153,7 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
     
     backGroundLayerFrame.origin = pointClampedToCGRect(backGroundLayerFrame.origin,displayableRect);
     
-    _backGroundView.frame = backGroundLayerFrame;
+    _actionSheetView.frame = backGroundLayerFrame;
     
     {//Vertical lines
         CGRect lineFrame = (CGRect){
@@ -301,7 +301,7 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
         });        
     }
     
-    self.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1.0);
+    _actionSheetView.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1.0);
     
     CAKeyframeAnimation *bounceAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
     bounceAnimation.values = [NSArray arrayWithObjects:
@@ -312,8 +312,8 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
     bounceAnimation.duration = animDuration;
     bounceAnimation.removedOnCompletion = NO;
     bounceAnimation.speed = reverse ? -1 : 1.;
-    [self.layer addAnimation:bounceAnimation forKey:@"bounce"];
-    self.layer.transform = CATransform3DIdentity;
+    [_actionSheetView.layer addAnimation:bounceAnimation forKey:@"bounce"];
+    _actionSheetView.layer.transform = CATransform3DIdentity;
 }
 
 @end
