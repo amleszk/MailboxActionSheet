@@ -140,7 +140,7 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
     CGSize boundsSize = self.bounds.size;
     
     CGPoint centerDisplayRect = (CGPoint){_showFromRect.origin.x+_showFromRect.size.width/2,_showFromRect.origin.y+_showFromRect.size.height/2};
-    CGRect backGroundLayerFrame = (CGRect){
+    CGRect actionSheetFrame = (CGRect){
         .origin={floorf(centerDisplayRect.x-kMBActionSheetViewSize.width/2),floorf(centerDisplayRect.y-kMBActionSheetViewSize.height/2)},
         .size=kMBActionSheetViewSize
     };
@@ -151,9 +151,9 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
         {   boundsSize.width-kMBActionSheetViewSize.width-2*kMBActionSheetViewDisplayPadding,
             boundsSize.height-kMBActionSheetViewSize.height-2*kMBActionSheetViewDisplayPadding}};
     
-    backGroundLayerFrame.origin = pointClampedToCGRect(backGroundLayerFrame.origin,displayableRect);
+    actionSheetFrame.origin = pointClampedToCGRect(actionSheetFrame.origin,displayableRect);
     
-    _actionSheetView.frame = backGroundLayerFrame;
+    _actionSheetView.frame = actionSheetFrame;
     
     {//Vertical lines
         CGRect lineFrame = (CGRect){
@@ -183,7 +183,7 @@ static inline CGPoint pointClampedToCGRect(CGPoint point, CGRect rect) {
         _horizontalDiv2Light.frame = lineFrame;
     }
 
-    CGRect layoutFrame = (CGRect){CGPointZero,backGroundLayerFrame.size};
+    CGRect layoutFrame = (CGRect){CGPointZero,actionSheetFrame.size};
     {//Touch intercept
         [self threeByThreeGridLayoutWithFrame:layoutFrame
                                         items:_itemTouchViews
