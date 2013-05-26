@@ -19,7 +19,7 @@
 typedef void (^MBActionSheetHandler)(void);
 
 @interface MBActionSheetViewItem : NSObject
-@property UIImage *iconImage;
-@property NSString *description;
+@property (strong) UIImage *iconImage;
+@property (strong) NSString *description;
 @property (copy) MBActionSheetHandler handler;
 @end
