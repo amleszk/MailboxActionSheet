@@ -1,4 +1,2 @@
-MailboxActionSheet
-==================
 
-![Screenshot](http://i.imgur.com/WiqXz9m.png)
+![Screenshot](http://i.imgur.com/1sFSb18.png)
